@@ -15,6 +15,29 @@ public class Problem2 extends Robot
     }
 
     public void carpetRooms(){
+        enterRoom();
+        checkWalls();
+        beeperNoBeeper();
+        exitRoom();
+    }
+    
+    public void turnRight() {
+        turnLeft();
+        turnLeft();
+        turnLeft();
+    }
+    
+    public void enterRoom() {
+        move();
+        turnLeft();
+        move();
+    }
+    
+    public void checkWalls() {
+        turnRight();
+        if(!frontIsClear()) {
+            
+        }
         
     }
 }
