@@ -17,8 +17,15 @@ public class Problem2 extends Robot
     public void carpetRooms(){
         enterRoom();
         checkWalls();
-        beeperNoBeeper();
+        faceSouth();
         exitRoom();
+        repeat();
+        repeat();
+        repeat();
+        repeat();
+        repeat();
+        repeat();
+        repeat();
     }
     
     public void turnRight() {
@@ -36,9 +43,48 @@ public class Problem2 extends Robot
     public void checkWalls() {
         turnRight();
         if(!frontIsClear()) {
-            
+            turnLeft();
+            if(!frontIsClear()) {
+                turnLeft();
+                if(!frontIsClear()) {
+                    putBeeper();
+                }
+            }
         }
         
+    }
+    
+    public void turnAround() {
+        turnLeft();
+        turnLeft();
+    }
+    
+    /*
+     * This is my problem 1 jsut facing south
+     */
+    
+    public void faceSouth() {
+        if(facingNorth()) {
+            turnAround();
+        }
+        if(facingEast()) {
+            turnRight();
+        }
+        if(facingWest()) {
+            turnLeft();
+        }
+    }
+    
+    public void exitRoom() {
+        move();
+        turnLeft();
+    }
+    
+    public void repeat() {
+        enterRoom();
+        checkWalls();
+        faceSouth();
+        exitRoom();
     }
 }
 
