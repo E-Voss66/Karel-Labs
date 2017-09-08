@@ -3,7 +3,7 @@ package lab_3.individual_lab;
 import kareltherobot.*;
 import java.awt.Color;
 
-public class Problem3 extends Robot
+public class Problem3 extends Problem2
 {
    
     /**
@@ -16,75 +16,161 @@ public class Problem3 extends Robot
 
     public void carpetRooms(){
         enterRoom();
-        checkWalls();
-        faceSouth();
-        exitRoom();
+        if(checkLeftWall() && checkRightWall() && checkCeiling()) {
+            carpetRoom();
+        }
+        else {
+            faceSouth();
+            exitRoom();
+        }
+        findNextRoom();
+        findNextRoom();
+        findNextRoom();
+        findNextRoom();
+        findNextRoom();
+        findNextRoom();
+        findNextRoom();
     }
     
-    public void turnRight(){
-        turnLeft();
-        turnLeft();
-        turnLeft();
-    }
-    
-    public void turnAround() {
-        turnLeft();
-        turnLeft();
-    }
     
     public void enterRoom() {
         move();
         turnLeft();
         move();
     }
+  
+    public boolean checkLeftWall() {
+        faceWest();
+        // no wall present = false 
+        // wall present = true
+        if(frontIsClear()) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     
-    /*
-     * I Left Off Here
-     */
+    public boolean checkRightWall() {
+        faceEast();
+        // no wall present = false 
+        // wall present = true
+        if(frontIsClear()) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     
-    public void checkWalls() {
-        turnRight();
-        checkSideWalls();
-        checkFront();
+    public void faceEast() {
         if(facingNorth()) {
             turnRight();
-            checkSideWalls();
-            checkFront();
-            if(facingNorth()) {
-                turnRight();
-                checkSideWalls();
-                checkFront();
-            }
         }
-    }
-
-    
-    public void checkSideWalls() {
-        if(!frontIsClear()) {
+        if(facingSouth()) {
+            turnLeft();
+        }
+        if(facingWest()) {
             turnAround();
-            if(!frontIsClear()) {
-                turnRight();
-            }
         }
     }
     
-    public void checkFront() {
+    public void faceNorth() {
+        if(facingEast()) {
+            turnLeft();
+        }
+        if(facingSouth()) {
+            turnAround();
+        }
+        if(facingWest()) {
+            turnRight();
+        }
+    }
+    
+    public void faceWest(){
         if(facingNorth()) {
-            if(frontIsClear()) {
-                move();
-            }
-            else {
-                putBeeper();
-            }
+            turnLeft();
         }
-    }
-    
-    public void faceSouth() {
-        
+        if(facingSouth()) {
+            turnRight();
+        }
+        if(facingEast()) {
+            turnAround();
+        }
     }
     
     public void exitRoom() {
+        move();
+        if(frontIsClear()) {
+            move();
+            if(frontIsClear()) {
+                move();
+            }
+        }
+        faceEast();
         
+    }
+    
+    public boolean checkCeiling() {
+        faceNorth();
+        // no wall present = false 
+        // wall present = true
+        if(frontIsClear()){
+            move();
+            if(checkRightWall() && checkLeftWall()) {
+                faceNorth();
+                if(frontIsClear()) {
+                    move();
+                    if(checkRightWall() && checkLeftWall()) {
+                        faceNorth();
+                        if(frontIsClear()) {
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return true;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return true;
+        }
+    }
+    
+    public void carpetRoom() {
+        putBeeper();
+        faceSouth();
+        move();
+        if(frontIsClear()) {
+            putBeeper();
+            move();
+            if(frontIsClear()){
+                putBeeper();
+                move();
+            }
+        }
+        faceEast();
+    }
+    
+    public void findNextRoom() {
+        enterRoom();
+        if(checkLeftWall() && checkRightWall() && checkCeiling()) {
+            carpetRoom();
+        }
+        else {
+            faceSouth();
+            exitRoom();
+        }
     }
 }
 

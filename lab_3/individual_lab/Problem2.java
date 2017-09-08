@@ -60,7 +60,7 @@ public class Problem2 extends Robot
     }
     
     /*
-     * This is my problem 1 jsut facing south
+     * This is my problem 1 just facing south
      */
     
     public void faceSouth() {
